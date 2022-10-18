@@ -15,7 +15,18 @@ const rootUrl = 'https://api.github.com';
 const GithubContext = createContext();
 
 export const GithubProvider = ({ children }) => {
-  const value = { ola: 'ola' };
+  const [githubUser, setGithubUser] = useState(mockUser);
+  const [githubRepos, setGithubRepos] = useState(mockRepos);
+  const [githubFollowers, setGithubFollowers] = useState(mockFollowers);
+
+  const value = {
+    githubUser,
+    setGithubUser,
+    githubRepos,
+    setGithubRepos,
+    githubFollowers,
+    setGithubFollowers,
+  };
 
   return (
     <GithubContext.Provider value={value}>{children}</GithubContext.Provider>

@@ -8,27 +8,45 @@ const Repos = () => {
   const { githubRepos } = useGlobalGithubContext();
 
   const getInfo = githubRepos.reduce((total, curr) => {
-    const { language } = curr;
+    const { language, stargazers_count } = curr;
     if (!language) return total;
     if (!total[language]) {
-      total[language] = { label: language, value: 1 };
+      total[language] = { label: language, value: 1, star: stargazers_count };
     } else {
       total[language] = {
         ...total[language],
         value: total[language].value + 1,
+        star: total[language].star + stargazers_count,
       };
     }
     return total;
   }, {});
-
-  let chartInfo = Object.values(getInfo)
+  const mostUsed = Object.values(getInfo)
     .sort((a, b) => b.value - a.value)
-    .slice(0, 4);
+    .slice(0, 5);
+
+  const mostPopular = Object.values(getInfo)
+    .sort((a, b) => b.star - a.star)
+    .slice(0, 5)
+    .map((item) => {
+      const { label, star } = item;
+      return { label, value: star };
+    });
+
+  const data = [
+    { label: 'javascript', value: 49 },
+    { label: 'CSS', value: 19 },
+    { label: 'PHP', value: 89 },
+    { label: 'Python', value: 89 },
+  ];
 
   return (
     <section className='section'>
       <Wrapper className='section-center'>
-        <Pie3D data={chartInfo} />
+        <Pie3D data={mostUsed} />
+        <Column3D />
+        <Doughnut2D data={mostPopular} />
+        <div></div>
       </Wrapper>
     </section>
   );

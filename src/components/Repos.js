@@ -1,33 +1,37 @@
 import React from 'react';
-import styled from 'styled-components';
-import { GithubContext } from '../context/context';
+import { GithubContext, useGlobalGithubContext } from '../context/context';
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
+
+import { Wrapper } from './styles/repos.component.style';
+
 const Repos = () => {
-  return <h2>repos component</h2>;
+  const { githubRepos } = useGlobalGithubContext();
+
+  const getInfo = githubRepos.reduce((total, curr) => {
+    const { language } = curr;
+    if (!language) return total;
+    if (!total[language]) {
+      total[language] = { label: language, value: 1 };
+    } else {
+      total[language] = {
+        ...total[language],
+        value: total[language].value + 1,
+      };
+    }
+    return total;
+  }, {});
+
+  let chartInfo = Object.values(getInfo)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 4);
+
+  return (
+    <section className='section'>
+      <Wrapper className='section-center'>
+        <Pie3D data={chartInfo} />
+      </Wrapper>
+    </section>
+  );
 };
-
-const Wrapper = styled.div`
-  display: grid;
-  justify-items: center;
-  gap: 2rem;
-  @media (min-width: 800px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: 1200px) {
-    grid-template-columns: 2fr 3fr;
-  }
-
-  div {
-    width: 100% !important;
-  }
-  .fusioncharts-container {
-    width: 100% !important;
-  }
-  svg {
-    width: 100% !important;
-    border-radius: var(--radius) !important;
-  }
-`;
 
 export default Repos;

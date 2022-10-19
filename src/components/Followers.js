@@ -6,8 +6,6 @@ import { Wrapper } from './styles/followers.component.style';
 const Followers = () => {
   const { githubFollowers } = useGlobalGithubContext();
 
-  console.log(githubFollowers);
-
   return (
     <Wrapper>
       <div className='followers'>

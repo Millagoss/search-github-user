@@ -29,8 +29,6 @@ const ChartComponent = ({ data }) => {
         caption: 'Language',
         theme: 'fusion',
         subCaption: 'Last year',
-        enableSmartLabels: '0',
-        startingAngle: '0',
         showPercentValues: '1',
         decimals: '1',
         useDataPlotColorForLabels: '1',

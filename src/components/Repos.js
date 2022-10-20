@@ -33,20 +33,36 @@ const Repos = () => {
       return { label, value: star };
     });
 
-  const data = [
-    { label: 'javascript', value: 49 },
-    { label: 'CSS', value: 19 },
-    { label: 'PHP', value: 89 },
-    { label: 'Python', value: 89 },
-  ];
+  let { stars, forks } = githubRepos.reduce(
+    (total, curr) => {
+      const { stargazers_count, forks_count, name } = curr;
+      total.stars.push({ label: name, value: stargazers_count });
+      total.forks.push({ label: name, value: forks_count });
+      return total;
+    },
+    {
+      stars: [],
+      forks: [],
+    }
+  );
+
+  stars = stars.sort((a, b) => b.value - a.value).slice(0, 5);
+  forks = forks.sort((a, b) => b.value - a.value).slice(0, 5);
+
+  // const data = [
+  //   { label: 'javascript', value: 49 },
+  //   { label: 'CSS', value: 19 },
+  //   { label: 'PHP', value: 89 },
+  //   { label: 'Python', value: 89 },
+  // ];
 
   return (
     <section className='section'>
       <Wrapper className='section-center'>
         <Pie3D data={mostUsed} />
-        <Column3D />
+        <Column3D data={stars} />
         <Doughnut2D data={mostPopular} />
-        <div></div>
+        <Bar3D data={forks} />
       </Wrapper>
     </section>
   );

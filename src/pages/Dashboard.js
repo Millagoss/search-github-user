@@ -1,15 +1,24 @@
 import React from 'react';
 import { Info, Repos, User, Search, Navbar } from '../components';
-import loadingImage from '../images/preloader.gif';
-import { GithubContext } from '../context/context';
+import { Spinner } from '../components/spinner';
+import { GithubContext, useGlobalGithubContext } from '../context/context';
+
 const Dashboard = () => {
+  const { isLoading } = useGlobalGithubContext();
+
   return (
     <main>
       <Navbar />
       <Search />
-      <Info />
-      <User />
-      <Repos />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Info />
+          <User />
+          <Repos />
+        </>
+      )}
     </main>
   );
 };

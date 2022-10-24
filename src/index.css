@@ -182,6 +182,53 @@ main {
   padding-bottom: 2rem;
 }
 
+.spinner {
+  position: relative;
+  width: calc(88px + 100px);
+  height: calc(88px + 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15rem;
+}
+
+.spinner::before,
+.spinner::after {
+  border: 10.6px solid #2caeba;
+  border-radius: 50%;
+  position: absolute;
+  content: '';
+  display: block;
+}
+
+.spinner::before {
+  width: calc(52.8px + 100px);
+  height: calc(52.8px + 100px);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  animation: spinner-1o3y8q 0.6000000000000001s infinite linear reverse;
+}
+
+.spinner::after {
+  animation: spinner-1o3y8q 0.4s infinite linear;
+  height: calc(88px + 100px);
+  width: calc(88px + 100px);
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+@keyframes spinner-1o3y8q {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-1o3y8q {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

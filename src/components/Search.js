@@ -7,7 +7,8 @@ import { Wrapper, ErrorWrapper } from './styles/search.component.style';
 const Search = () => {
   const [user, setUser] = useState('');
 
-  const { fetchUser, requestLimit, error } = useGlobalGithubContext();
+  const { fetchUser, requestLimit, error, isLoading } =
+    useGlobalGithubContext();
 
   const { limit, remaining } = requestLimit;
 
@@ -35,7 +36,9 @@ const Search = () => {
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />
-            {remaining > 0 && <button type='submit'>search</button>}
+            {remaining > 0 && !isLoading && (
+              <button type='submit'>search</button>
+            )}
           </div>
         </form>
         <h3>

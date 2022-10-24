@@ -65,7 +65,9 @@ export const GithubProvider = ({ children }) => {
       setGithubUser(user.data);
       setGithubRepos(repos.data);
       setGithubFollowers(followers.data);
+      setIsLoading(false);
     } else {
+      setIsLoading(false);
       toggleError(true, 'there is no user with that uesrname');
     }
   };
@@ -77,6 +79,7 @@ export const GithubProvider = ({ children }) => {
     fetchUser,
     requestLimit,
     error,
+    isLoading,
   };
 
   return (

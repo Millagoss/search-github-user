@@ -18,14 +18,65 @@ export const GithubProvider = ({ children }) => {
   const [githubUser, setGithubUser] = useState(mockUser);
   const [githubRepos, setGithubRepos] = useState(mockRepos);
   const [githubFollowers, setGithubFollowers] = useState(mockFollowers);
+  const [requestLimit, setReaquestLimit] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ show: false, msg: '' });
+
+  const checkRequests = () => {
+    axios(`${rootUrl}/rate_limit`)
+      .then(({ data }) => {
+        const {
+          rate: { remaining, limit },
+        } = data;
+        setReaquestLimit({ limit, remaining });
+        if (remaining === 0) {
+          toggleError(
+            true,
+            'sorry, you have exceeded your hourly request limit'
+          );
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function toggleError(show = false, msg = '') {
+    setError({ show, msg });
+  }
+
+  useEffect(() => {
+    checkRequests();
+  }, [githubUser]);
+
+  const fetchUser = async (userName) => {
+    toggleError();
+    setIsLoading(true);
+
+    const userUrl = `${rootUrl}/users/${userName}`;
+    const reposUrl = `${userUrl}/repos?per_page=100`;
+    const followersUrl = `${userUrl}/followers`;
+
+    const user = await axios(userUrl).catch((err) => console.log(err));
+
+    if (user) {
+      const repos = await axios(reposUrl).catch((err) => console.log(err));
+      const followers = await axios(followersUrl).catch((err) =>
+        console.log(err)
+      );
+      setGithubUser(user.data);
+      setGithubRepos(repos.data);
+      setGithubFollowers(followers.data);
+    } else {
+      toggleError(true, 'there is no user with that uesrname');
+    }
+  };
 
   const value = {
     githubUser,
-    setGithubUser,
     githubRepos,
-    setGithubRepos,
     githubFollowers,
-    setGithubFollowers,
+    fetchUser,
+    requestLimit,
+    error,
   };
 
   return (

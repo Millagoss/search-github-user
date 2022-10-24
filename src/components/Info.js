@@ -10,7 +10,6 @@ const UserInfo = () => {
   const { githubUser } = useGlobalGithubContext();
 
   const { public_repos, followers, following, public_gists } = githubUser;
-
   const userInfo = [
     {
       id: 1,

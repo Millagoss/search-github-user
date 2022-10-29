@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  Children,
-  createContext,
-} from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import mockUser from './mockData.js/mockUser';
 import mockRepos from './mockData.js/mockRepos';
 import mockFollowers from './mockData.js/mockFollowers';
@@ -58,14 +52,24 @@ export const GithubProvider = ({ children }) => {
     const user = await axios(userUrl).catch((err) => console.log(err));
 
     if (user) {
-      const repos = await axios(reposUrl).catch((err) => console.log(err));
-      const followers = await axios(followersUrl).catch((err) =>
-        console.log(err)
-      );
-      setGithubUser(user.data);
-      setGithubRepos(repos.data);
-      setGithubFollowers(followers.data);
-      setIsLoading(false);
+      const repos = axios(reposUrl).catch((err) => console.log(err));
+      const followers = axios(followersUrl).catch((err) => console.log(err));
+
+      await Promise.allSettled([repos, followers])
+        .then((results) => {
+          const [repos, followers] = results;
+
+          if (repos.status === 'fulfilled') {
+            setGithubRepos(repos.value.data);
+          }
+          if (followers.status === 'fulfilled') {
+            setGithubFollowers(followers.value.data);
+          }
+
+          setGithubUser(user.data);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
     } else {
       setIsLoading(false);
       toggleError(true, 'there is no user with that uesrname');

@@ -1,6 +1,6 @@
 import React from 'react';
-import { GithubContext, useGlobalGithubContext } from '../context/context';
-import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
+import { useGlobalGithubContext } from '../context/context';
+import { Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 
 import { Wrapper } from './styles/repos.component.style';
 

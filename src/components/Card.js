@@ -1,5 +1,5 @@
 import React from 'react';
-import { GithubContext, useGlobalGithubContext } from '../context/context';
+import { useGlobalGithubContext } from '../context/context';
 
 import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
 

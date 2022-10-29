@@ -39,6 +39,8 @@ export const GithubProvider = ({ children }) => {
 
   useEffect(() => {
     checkRequests();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [githubUser]);
 
   const fetchUser = async (userName) => {

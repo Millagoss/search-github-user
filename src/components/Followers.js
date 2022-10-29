@@ -1,5 +1,5 @@
 import React from 'react';
-import { GithubContext, useGlobalGithubContext } from '../context/context';
+import { useGlobalGithubContext } from '../context/context';
 
 import { Wrapper } from './styles/followers.component.style';
 

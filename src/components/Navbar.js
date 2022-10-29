@@ -5,14 +5,7 @@ import { Wrapper } from './styles/navbar.component.style';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Navbar = () => {
-  const {
-    isAuthenticated,
-    loginWithRedirect,
-    logout,
-    user,
-    isLoading,
-    loginWithPopup,
-  } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
   const isUser = isAuthenticated && user;
 

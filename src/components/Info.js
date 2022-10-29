@@ -1,5 +1,5 @@
 import React from 'react';
-import { GithubContext, useGlobalGithubContext } from '../context/context';
+import { useGlobalGithubContext } from '../context/context';
 
 import { GoRepo, GoGist } from 'react-icons/go';
 import { FiUsers, FiUserPlus } from 'react-icons/fi';
